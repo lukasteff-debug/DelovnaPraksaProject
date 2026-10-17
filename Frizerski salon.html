@@ -1,0 +1,1197 @@
+<html lang="mk"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinito Studio — Фризерски салон</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,ital@9..144,300..700,0..1&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    /* ============ TOKENS ============ */
+    :root{
+      --ink:#211d1b;
+      --ink-soft:#3a332f;
+      --cream:#f3ece0;
+      --cream-deep:#eae1d2;
+      --wine:#6e2a34;
+      --wine-deep:#4a1c24;
+      --gold:#a9814b;
+      --blush:#e7cfc7;
+      --line: rgba(33,29,27,0.14);
+      --line-on-dark: rgba(243,236,224,0.18);
+      --shadow: 0 18px 40px -20px rgba(33,29,27,0.35);
+      --radius-s: 3px;
+      --ff-display: 'Fraunces', serif;
+      --ff-body: 'Work Sans', sans-serif;
+      --maxw: 1180px;
+    }
+
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+    }
+    body{
+      margin:0;
+      background:var(--cream);
+      color:var(--ink);
+      font-family:var(--ff-body);
+      font-weight:400;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+    }
+    h1,h2,h3,h4{
+      font-family:var(--ff-display);
+      font-weight:500;
+      margin:0;
+      color:var(--ink);
+      letter-spacing:-0.01em;
+    }
+    p{margin:0;}
+    a{color:inherit; text-decoration:none;}
+    ul{margin:0; padding:0; list-style:none;}
+    button{font-family:inherit; cursor:pointer;}
+    img,svg{display:block; max-width:100%;}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+    section{position:relative;}
+    ::selection{background:var(--wine); color:var(--cream);}
+    :focus-visible{outline:2px solid var(--wine); outline-offset:3px;}
+
+    .eyebrow{
+      font-family:var(--ff-body);
+      font-size:0.8rem;
+      color:var(--wine);
+      font-weight:600;
+      margin-bottom:14px;
+      display:inline-block;
+    }
+    .section-head{max-width:560px; margin-bottom:52px;}
+    .section-head p{margin-top:16px; color:var(--ink-soft); font-size:1.02rem; max-width:46ch;}
+    .section-pad{padding:108px 0;}
+    @media(max-width:720px){ .section-pad{padding:72px 0;} }
+
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:15px 30px;
+      border:1px solid var(--ink);
+      background:var(--ink);
+      color:var(--cream);
+      font-size:0.95rem;
+      font-weight:500;
+      border-radius:2px;
+      transition:background .25s ease, color .25s ease, border-color .25s ease;
+    }
+    .btn:hover{background:transparent; color:var(--ink);}
+    .btn.btn-outline{background:transparent; color:var(--ink);}
+    .btn.btn-outline:hover{background:var(--ink); color:var(--cream);}
+    .btn.btn-on-dark{border-color:var(--cream); background:var(--cream); color:var(--ink);}
+    .btn.btn-on-dark:hover{background:transparent; color:var(--cream);}
+    .btn.btn-wine{border-color:var(--wine); background:var(--wine); color:var(--cream);}
+    .btn.btn-wine:hover{background:transparent; color:var(--wine);}
+    .btn:disabled{opacity:0.45; cursor:not-allowed;}
+    .btn:disabled:hover{background:var(--wine); color:var(--cream);}
+
+    /* ============ NAV ============ */
+    .nav{
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      padding:26px 0;
+      transition:padding .3s ease, background .3s ease, box-shadow .3s ease;
+    }
+    .nav.is-scrolled{
+      padding:14px 0;
+      background:rgba(243,236,224,0.92);
+      backdrop-filter:blur(10px);
+      box-shadow:0 1px 0 var(--line);
+    }
+    .nav .wrap{display:flex; align-items:center; justify-content:space-between;}
+    .brand{font-family:var(--ff-display); font-size:1.22rem; letter-spacing:0.01em;}
+    .brand em{font-style:italic; color:var(--wine);}
+    .nav-links{display:flex; gap:34px; align-items:center;}
+    .nav-links a{
+      font-size:0.92rem; color:var(--ink-soft); position:relative; padding:4px 0;
+      transition:color .2s ease;
+    }
+    .nav-links a::after{
+      content:''; position:absolute; left:0; right:100%; bottom:-2px; height:1px; background:var(--wine);
+      transition:right .25s ease;
+    }
+    .nav-links a:hover, .nav-links a.active{color:var(--ink);}
+    .nav-links a:hover::after, .nav-links a.active::after{right:0;}
+    .nav-cta{display:flex; align-items:center; gap:22px;}
+    .nav-cta .btn{padding:11px 22px; font-size:0.88rem;}
+    .burger{
+      display:none; width:36px; height:28px; position:relative; background:none; border:none; padding:0;
+    }
+    .burger span{
+      position:absolute; left:0; right:0; height:1.5px; background:var(--ink); transition:transform .3s ease, opacity .3s ease;
+    }
+    .burger span:nth-child(1){top:4px;}
+    .burger span:nth-child(2){top:13px;}
+    .burger span:nth-child(3){top:22px;}
+    .nav.nav-open .burger span:nth-child(1){transform:translateY(9px) rotate(45deg);}
+    .nav.nav-open .burger span:nth-child(2){opacity:0;}
+    .nav.nav-open .burger span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+
+    @media(max-width:900px){
+      .nav-links{
+        position:fixed; top:0; right:0; height:100vh; width:min(78vw,340px);
+        background:var(--ink); flex-direction:column; justify-content:center; gap:30px;
+        transform:translateX(100%); transition:transform .35s ease; padding:40px;
+      }
+      .nav-links a{color:var(--cream-deep); font-size:1.1rem;}
+      .nav-links a:hover, .nav-links a.active{color:#fff;}
+      .nav.nav-open .nav-links{transform:translateX(0);}
+      .nav-cta .btn.btn-outline{display:none;}
+      .burger{display:block;}
+    }
+
+    /* ============ HERO ============ */
+    .hero{padding:168px 0 0; overflow:hidden;}
+    .hero .wrap{
+      display:grid; grid-template-columns:1.15fr 0.85fr; gap:0; align-items:stretch;
+    }
+    .hero-copy{padding-bottom:90px; padding-right:50px;}
+    .hero-copy h1{
+      font-size:clamp(2.6rem, 5vw, 4.4rem);
+      line-height:1.03;
+      font-weight:400;
+    }
+    .hero-copy h1 .i{font-style:italic; color:var(--wine); font-weight:400;}
+    .hero-copy .lede{
+      margin-top:26px; font-size:1.1rem; color:var(--ink-soft); max-width:42ch;
+    }
+    .hero-actions{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
+    .hero-stats{
+      display:flex; gap:44px; margin-top:64px; padding-top:32px; border-top:1px solid var(--line);
+    }
+    .stat b{
+      display:block; font-family:var(--ff-display); font-size:2.1rem; color:var(--wine); font-weight:500;
+    }
+    .stat span{font-size:0.82rem; color:var(--ink-soft);}
+
+    .hero-visual{
+      position:relative; background:var(--wine);
+      display:flex; align-items:flex-end; justify-content:center;
+      padding:40px 30px;
+    }
+    .hero-visual::before{
+      content:''; position:absolute; inset:0; background:
+            radial-gradient(circle at 30% 20%, rgba(243,236,224,0.14), transparent 55%);
+    }
+    .hero-badge{
+      position:absolute; top:36px; left:-30px; width:104px; height:104px; border-radius:50%;
+      background:var(--cream); color:var(--wine); display:flex; align-items:center; justify-content:center;
+      text-align:center; font-family:var(--ff-display); font-size:0.72rem; line-height:1.3; font-weight:500;
+      box-shadow:var(--shadow); padding:8px;
+    }
+    .hero-illustration{width:100%; max-width:320px;}
+
+    @media(max-width:900px){
+      .hero{padding-top:130px;}
+      .hero .wrap{grid-template-columns:1fr;}
+      .hero-copy{padding-right:0; padding-bottom:48px;}
+      .hero-visual{min-height:300px;}
+      .hero-badge{left:16px; top:16px;}
+      .hero-stats{gap:28px; flex-wrap:wrap;}
+    }
+
+    /* ============ MARQUEE ============ */
+    .marquee{
+      background:var(--ink); color:var(--cream-deep); padding:16px 0; overflow:hidden;
+      border-top:1px solid var(--line-on-dark); border-bottom:1px solid var(--line-on-dark);
+    }
+    .marquee-track{display:flex; gap:60px; width:max-content; animation:scrollmarq 32s linear infinite;}
+    @keyframes scrollmarq{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    .marquee span{font-family:var(--ff-display); font-style:italic; font-size:1.05rem; white-space:nowrap; opacity:0.85;}
+
+    /* ============ ABOUT ============ */
+    .about .wrap{display:grid; grid-template-columns:0.95fr 1.05fr; gap:80px; align-items:center;}
+    .about-text p{color:var(--ink-soft); margin-top:18px; font-size:1.02rem;}
+    .about-text p:first-of-type{margin-top:16px;}
+    .pull{
+      background:var(--blush); padding:52px 46px; border-left:3px solid var(--wine);
+    }
+    .pull p{
+      font-family:var(--ff-display); font-style:italic; font-size:1.5rem; line-height:1.4; color:var(--wine-deep);
+    }
+    .pull footer{margin-top:22px; font-family:var(--ff-body); font-style:normal; font-size:0.85rem; color:var(--ink-soft);}
+    @media(max-width:900px){ .about .wrap{grid-template-columns:1fr; gap:40px;} }
+
+    /* ============ SERVICES (menu style) ============ */
+    .services{background:var(--cream-deep);}
+    .menu-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px 70px;}
+    .menu-cat h3{
+      font-size:1.4rem; font-style:italic; color:var(--wine-deep); margin-bottom:22px; padding-bottom:14px;
+      border-bottom:1px solid var(--line);
+    }
+    .menu-item{
+      display:flex; align-items:baseline; gap:10px; padding:13px 0; border-bottom:1px dashed var(--line);
+    }
+    .menu-item:last-child{border-bottom:none;}
+    .menu-item .name{font-weight:500; font-size:1rem;}
+    .menu-item .desc{display:block; font-size:0.82rem; color:var(--ink-soft); margin-top:3px; font-weight:400;}
+    .menu-item .dots{flex:1; border-bottom:1px dotted var(--ink-soft); opacity:0.4; transform:translateY(-4px); min-width:16px;}
+    .menu-item .price{font-family:var(--ff-display); font-weight:500; white-space:nowrap; color:var(--wine);}
+    @media(max-width:800px){ .menu-grid{grid-template-columns:1fr; gap:44px;} }
+
+    /* ============ GALLERY ============ */
+    .gallery{background:var(--ink); color:var(--cream);}
+    .gallery .section-head p{color:rgba(243,236,224,0.65);}
+    .gallery .eyebrow{color:var(--gold);}
+    .filter-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px;}
+    .filter-btn{
+      padding:9px 18px; border:1px solid var(--line-on-dark); background:transparent; color:var(--cream-deep);
+      border-radius:20px; font-size:0.85rem; transition:background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .filter-btn:hover{border-color:var(--gold);}
+    .filter-btn.active{background:var(--gold); border-color:var(--gold); color:var(--ink);}
+    .gal-grid{
+      display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:190px; grid-auto-flow:dense; gap:6px;
+    }
+    .gal-tile{
+      position:relative; overflow:hidden; border-radius:2px;
+      display:flex; align-items:flex-end; padding:16px;
+      transition:transform .5s ease, opacity .4s ease;
+    }
+    .gal-tile img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:50% 18%; /* keeps faces/heads in frame on tall hairstyle shots */
+      display:block;
+      z-index:0;
+    }
+    /* t3 (square) and t8 (wide/landscape) don't need a top-weighted crop */
+    .gal-tile.t3 img, .gal-tile.t8 img{ object-position:50% 40%; }
+    .gal-tile.hidden-tile{display:none;}
+    .gal-tile span{
+      font-family:var(--ff-display); font-style:italic; color:var(--cream); font-size:0.95rem; position:relative; z-index:2;
+      text-shadow:0 2px 12px rgba(0,0,0,0.4);
+    }
+    .gal-tile::after{content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55));}
+    .gal-tile:hover{transform:scale(1.02);}
+    /* Row-spans below are matched to each photo's real aspect ratio so object-fit:cover
+       has to crop as little as possible instead of squeezing a tall portrait into a wide box. */
+    .gal-tile.t1{grid-row:span 3; background:linear-gradient(135deg,#8a3b45,#4a1c24);} /* баланж 335x597 - very tall */
+    .gal-tile.t2{grid-row:span 2; background:linear-gradient(135deg,#c9a24f,#8a6a2f);} /* variety 337x472 */
+    .gal-tile.t3{grid-row:span 2; background:linear-gradient(135deg,#e7cfc7,#a9814b);} /* svapool 447x447 - square */
+    .gal-tile.t4{grid-row:span 2; background:linear-gradient(160deg,#6e2a34,#211d1b);} /* bordo 399x501 */
+    .gal-tile.t5{grid-row:span 2; background:linear-gradient(135deg,#3a332f,#6e2a34);} /* hol 399x501 */
+    .gal-tile.t6{grid-row:span 3; background:linear-gradient(135deg,#a9814b,#4a1c24);} /* bob 1200x1950 - very tall */
+    .gal-tile.t7{grid-row:span 3; background:linear-gradient(120deg,#e7cfc7,#6e2a34,#211d1b);} /* cvece 400x715 - very tall */
+    .gal-tile.t8{grid-column:span 2; grid-row:span 1; background:linear-gradient(135deg,#4a1c24,#a9814b);} /* коска 600x320 - wide */
+    @media(max-width:900px){
+      .gal-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:160px;}
+      .gal-tile.t8{grid-column:span 2;}
+    }
+
+    /* ============ TEAM ============ */
+    .team-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:36px;}
+    .member{}
+    .avatar{
+      width:100%; aspect-ratio:1; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-family:var(--ff-display); font-size:2.2rem; color:var(--cream); margin-bottom:20px; font-weight:500;
+    }
+    .avatar.c1{background:var(--wine);}
+    .avatar.c2{background:var(--gold);}
+    .avatar.c3{background:var(--ink);}
+    .avatar.c4{background:#8a6a2f;}
+    .member h4{font-size:1.15rem; font-weight:500;}
+    .member .role{font-size:0.85rem; color:var(--wine); margin-top:4px; font-style:italic; font-family:var(--ff-display);}
+    .member .bio{font-size:0.88rem; color:var(--ink-soft); margin-top:12px;}
+    .tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:14px;}
+    .tags span{font-size:0.72rem; padding:4px 10px; border:1px solid var(--line); border-radius:20px; color:var(--ink-soft);}
+    @media(max-width:900px){ .team-grid{grid-template-columns:1fr 1fr; row-gap:44px;} }
+    @media(max-width:560px){ .team-grid{grid-template-columns:1fr;} }
+
+    /* ============ TESTIMONIALS ============ */
+    .testi{background:var(--blush);}
+    .testi-wrap{max-width:720px; margin:0 auto; text-align:center; position:relative;}
+    .testi-slide{display:none;}
+    .testi-slide.active{display:block; animation:fadein .5s ease;}
+    @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+    .testi-slide p{
+      font-family:var(--ff-display); font-style:italic; font-size:1.55rem; line-height:1.45; color:var(--wine-deep);
+    }
+    .testi-slide .who{margin-top:24px; font-size:0.88rem; color:var(--ink-soft); font-family:var(--ff-body);}
+    .testi-nav{display:flex; align-items:center; justify-content:center; gap:22px; margin-top:36px;}
+    .testi-arrow{
+      width:42px; height:42px; border-radius:50%; border:1px solid var(--wine-deep); background:transparent;
+      color:var(--wine-deep); display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+      transition:background .2s ease, color .2s ease;
+    }
+    .testi-arrow:hover{background:var(--wine-deep); color:var(--cream);}
+    .testi-dots{display:flex; gap:8px;}
+    .testi-dot{width:7px; height:7px; border-radius:50%; background:rgba(74,28,36,0.3); border:none; padding:0;}
+    .testi-dot.active{background:var(--wine-deep); width:22px; border-radius:4px; transition:width .25s ease;}
+
+    /* ============ BOOKING ============ */
+    .booking{background:var(--ink); color:var(--cream);}
+    .booking .wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px;}
+    .booking-info .eyebrow{color:var(--gold);}
+    .booking-info p{color:rgba(243,236,224,0.7); margin-top:16px; max-width:38ch;}
+    .steps{margin-top:40px; display:flex; flex-direction:column; gap:26px;}
+    .step{display:flex; gap:16px;}
+    .step .num{
+      width:30px; height:30px; flex:none; border:1px solid var(--gold); border-radius:50%; color:var(--gold);
+      display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-family:var(--ff-display);
+    }
+    .step h5{font-size:0.98rem; font-weight:500; margin-bottom:4px;}
+    .step p{font-size:0.85rem; color:rgba(243,236,224,0.6); max-width:34ch;}
+
+    .book-card{
+      background:var(--cream); color:var(--ink); padding:44px; border-radius:2px; box-shadow:var(--shadow);
+    }
+    .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+    .field{margin-bottom:20px;}
+    .field label{display:block; font-size:0.8rem; color:var(--ink-soft); margin-bottom:8px;}
+    .field select, .field input{
+      width:100%; padding:12px 14px; border:1px solid var(--line); background:var(--cream); color:var(--ink);
+      font-family:var(--ff-body); font-size:0.95rem; border-radius:2px; transition:border-color .2s ease;
+    }
+    .field select:focus, .field input:focus{border-color:var(--wine);}
+    .price-line{
+      display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:var(--blush);
+      margin-bottom:20px; font-size:0.9rem;
+    }
+    .price-line b{font-family:var(--ff-display); color:var(--wine-deep); font-size:1.15rem;}
+    .slots{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;}
+    .slot{
+      padding:8px 12px; border:1px solid var(--line); background:transparent; font-size:0.82rem; border-radius:2px;
+      transition:background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .slot:hover{border-color:var(--wine);}
+    .slot.selected{background:var(--wine); color:var(--cream); border-color:var(--wine);}
+    .slot:disabled{opacity:0.3; cursor:not-allowed; text-decoration:line-through;}
+    .book-card .btn{width:100%; justify-content:center; margin-top:12px;}
+    .form-note{font-size:0.76rem; color:var(--ink-soft); margin-top:14px; text-align:center;}
+    .confirm-panel{
+      display:none; border:1px solid var(--wine); padding:26px; margin-top:6px; background:var(--blush);
+    }
+    .confirm-panel.show{display:block; animation:fadein .4s ease;}
+    .confirm-panel h4{font-size:1.1rem; color:var(--wine-deep); margin-bottom:12px;}
+    .confirm-panel dl{display:grid; grid-template-columns:auto 1fr; gap:6px 14px; font-size:0.88rem;}
+    .confirm-panel dt{color:var(--ink-soft);}
+    .confirm-panel dd{margin:0; font-weight:500;}
+    @media(max-width:900px){ .booking .wrap{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;} .book-card{padding:28px;} }
+
+    /* ============ FAQ ============ */
+    .faq-list{max-width:760px;}
+    .faq-item{border-bottom:1px solid var(--line);}
+    .faq-q{
+      width:100%; display:flex; justify-content:space-between; align-items:center; gap:20px; text-align:left;
+      background:none; border:none; padding:24px 0; font-family:var(--ff-display); font-size:1.15rem; color:var(--ink);
+    }
+    .faq-q .plus{font-size:1.4rem; font-weight:300; transition:transform .3s ease; color:var(--wine); flex:none;}
+    .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+    .faq-a{
+      max-height:0; overflow:hidden; transition:max-height .35s ease, padding .35s ease;
+    }
+    .faq-a p{padding-bottom:0; color:var(--ink-soft); font-size:0.95rem; max-width:64ch;}
+    .faq-item.open .faq-a{max-height:220px; padding-bottom:24px;}
+
+    /* ============ CONTACT / FOOTER ============ */
+    footer.site-footer{background:var(--wine-deep); color:var(--cream-deep); padding:90px 0 34px;}
+    .foot-grid{display:grid; grid-template-columns:1.3fr 0.8fr 0.8fr 1.1fr; gap:50px;}
+    .foot-brand .brand{color:var(--cream); font-size:1.3rem;}
+    .foot-brand p{margin-top:16px; font-size:0.88rem; color:rgba(243,236,224,0.65); max-width:34ch;}
+    .foot-col h5{font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); margin-bottom:18px; font-weight:600;}
+    .foot-col li{margin-bottom:11px; font-size:0.88rem;}
+    .foot-col a{color:rgba(243,236,224,0.75); transition:color .2s ease;}
+    .foot-col a:hover{color:#fff;}
+    .newsletter{display:flex; margin-top:8px; border-bottom:1px solid rgba(243,236,224,0.35); padding-bottom:8px;}
+    .newsletter input{
+      flex:1; background:none; border:none; color:var(--cream); font-family:var(--ff-body); font-size:0.9rem; padding:6px 0;
+    }
+    .newsletter input::placeholder{color:rgba(243,236,224,0.45);}
+    .newsletter button{background:none; border:none; color:var(--gold); font-size:0.85rem; font-weight:600;}
+    .news-msg{font-size:0.78rem; color:var(--gold); margin-top:10px; height:14px;}
+    .foot-bottom{
+      margin-top:70px; padding-top:26px; border-top:1px solid rgba(243,236,224,0.16);
+      display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:0.78rem; color:rgba(243,236,224,0.5);
+    }
+    @media(max-width:900px){ .foot-grid{grid-template-columns:1fr 1fr; row-gap:40px;} }
+    @media(max-width:560px){ .foot-grid{grid-template-columns:1fr;} }
+
+    .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+    .reveal.in{opacity:1; transform:translateY(0);}
+
+    /* ============ THEME / DARK MODE ============ */
+    body.dark-theme{
+      --ink:#f3ece0;
+      --ink-soft:#d5cbc0;
+      --cream:#211d1b;
+      --cream-deep:#2b2522;
+      --wine:#b86a75;
+      --wine-deep:#d99aa2;
+      --gold:#c9a56b;
+      --blush:#4a3638;
+      --line:rgba(243,236,224,0.16);
+      --line-on-dark:rgba(243,236,224,0.18);
+      --shadow:0 18px 40px -20px rgba(0,0,0,0.55);
+    }
+
+    body.dark-theme .nav.is-scrolled{
+      background:rgba(33,29,27,0.94);
+    }
+
+    body.dark-theme .nav-links a{color:var(--ink-soft);}
+    body.dark-theme .nav-links a:hover,
+    body.dark-theme .nav-links a.active{color:var(--ink);}
+
+    body.dark-theme .btn-outline{
+      background:transparent;
+      color:var(--ink);
+      border-color:var(--ink);
+    }
+
+    body.dark-theme .btn-outline:hover{
+      background:var(--ink);
+      color:var(--cream);
+    }
+
+    body.dark-theme .services{background:var(--cream-deep);}
+    body.dark-theme .pull{background:var(--blush);}
+    body.dark-theme .testi{background:var(--blush);}
+
+    body.dark-theme .field select,
+    body.dark-theme .field input{
+      background:#2b2522;
+      color:var(--ink);
+      border-color:var(--line);
+    }
+
+    body.dark-theme .book-card{
+      background:#2b2522;
+      color:var(--ink);
+    }
+
+    body.dark-theme .price-line,
+    body.dark-theme .confirm-panel{
+      background:var(--blush);
+    }
+
+    body.dark-theme footer.site-footer{
+      background:#171312;
+    }
+
+    /* Theme button */
+    .theme-toggle{
+      width:42px;
+      height:42px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--ink);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.05rem;
+      transition:background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .theme-toggle:hover{
+      background:var(--ink);
+      color:var(--cream);
+      border-color:var(--ink);
+    }
+
+    /* Cookie banner */
+    .cookie-banner{
+      position:fixed;
+      left:24px;
+      right:24px;
+      bottom:24px;
+      z-index:1000;
+      max-width:760px;
+      margin:auto;
+      padding:20px 22px;
+      background:var(--ink);
+      color:var(--cream);
+      border:1px solid var(--line-on-dark);
+      box-shadow:0 15px 45px rgba(0,0,0,.28);
+      display:flex;
+      align-items:center;
+      gap:20px;
+      justify-content:space-between;
+    }
+    .cookie-banner p{
+      font-size:.86rem;
+      line-height:1.45;
+      opacity:.9;
+    }
+    .cookie-actions{
+      display:flex;
+      gap:8px;
+      flex:none;
+    }
+    .cookie-actions button{
+      padding:9px 15px;
+      border:1px solid var(--cream);
+      background:transparent;
+      color:var(--cream);
+      border-radius:2px;
+      font-size:.82rem;
+    }
+    .cookie-actions button.accept{
+      background:var(--cream);
+      color:var(--ink);
+    }
+    @media(max-width:700px){
+      .cookie-banner{
+        left:12px;
+        right:12px;
+        bottom:12px;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .cookie-actions{width:100%;}
+      .cookie-actions button{flex:1;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#home" class="brand">Infinito <em>Studio</em></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#uslugi" data-nav="" class="">Услуги</a></li>
+      <li><a href="#tim" data-nav="" class="">Тим</a></li>
+      <li><a href="#galerija" data-nav="" class="">Галерија</a></li>
+      <li><a href="#iskustva" data-nav="" class="">Искуства</a></li>
+      <li><a href="#rezervacija" data-nav="" class="">Резервации</a></li>
+      <li><a href="#kontakt" data-nav="">Контакт</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Смени тема" title="Смени тема">☾</button>
+      <a href="#rezervacija" class="btn btn-outline">Закажи термин</a>
+      <button class="burger" id="burger" aria-label="Мени"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-copy reveal in">
+      <span class="eyebrow">Фризерски студио во срце на Скопје</span>
+      <h1>Косата е занает.<br><span class="i">Ние го негуваме.</span></h1>
+      <p class="lede">Infinito Studio е бутик студио каде секое шишање, боја и стилизација се пристапуваат како занает — прецизно, трпеливо и кроено според тебе.</p>
+      <div class="hero-actions">
+        <a href="#rezervacija" class="btn btn-wine">Закажи термин</a>
+        <a href="#uslugi" class="btn btn-outline">Види услуги</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b data-count="11">11</b><span>години искуство</span></div>
+        <div class="stat"><b data-count="4200">4,200</b><span>задоволни клиенти</span></div>
+        <div class="stat"><b data-count="6">6</b><span>стручни стилисти</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-badge">Од 2014<br>во Скопје</div>
+      <svg class="hero-illustration" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 40 C60 20 90 10 110 20 L230 90 C245 98 245 118 230 126 L110 196" stroke="#f3ece0" stroke-width="2" opacity="0.55"></path>
+        <path d="M60 100 C60 80 90 70 110 80 L230 150 C245 158 245 178 230 186 L110 256" stroke="#f3ece0" stroke-width="2" opacity="0.4"></path>
+        <path d="M60 160 C60 140 90 130 110 140 L230 210 C245 218 245 238 230 246 L110 316" stroke="#f3ece0" stroke-width="2" opacity="0.28"></path>
+        <circle cx="70" cy="50" r="4" fill="#a9814b"></circle>
+        <circle cx="70" cy="110" r="4" fill="#e7cfc7"></circle>
+        <circle cx="70" cy="170" r="4" fill="#f3ece0"></circle>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Шишање</span><span>Боја и Ombre</span><span>Третмани</span><span>Свадбени фризури</span><span>Нега на брада</span><span>Плетенки</span>
+    <span>Шишање</span><span>Боја и Ombre</span><span>Третмани</span><span>Свадбени фризури</span><span>Нега на брада</span><span>Плетенки</span>
+  </div>
+</div>
+
+<section class="about section-pad" id="za-nas">
+  <div class="wrap">
+    <div class="about-text reveal in">
+      <span class="eyebrow">Нашата приказна</span>
+      <h2 style="font-size:2.1rem;">Место каде трпението е дел од резултатот</h2>
+      <p>Лука го отвори студиото во 2014 година со идеја едноставна колку и трајна: секоја коса бара свој пристап. Нема универзално решение — има слушање, анализа на структурата и рачна изработка на бојата или формата.</p>
+      <p>Денес тимот брои четири стилисти, секој со своја специјализација, но со заедничка филозофија — квалитетни производи, чист занает и внимание кон детали што другите ги прескокнуваат.</p>
+    </div>
+    <div class="pull reveal in">
+      <p>„Не бараме тренд што ќе трае еден месец. Бараме форма што ќе ти прилега и по една година.“</p>
+      <footer>— Лука Стефановски, основач и главен стилист</footer>
+    </div>
+  </div>
+</section>
+
+<section class="services section-pad" id="uslugi">
+  <div class="wrap">
+    <div class="section-head reveal in">
+      <span class="eyebrow">Ценовник</span>
+      <h2 style="font-size:2.2rem;">Услуги</h2>
+      <p>Цените се ориентациски и зависат од должина и густина на косата. Точна проценка добивате при консултација пред третманот.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-cat reveal in">
+        <h3>Шишање и обликување</h3>
+        <div class="menu-item"><span class="name">Женско шишање<span class="desc">миење, шишање и сушење</span></span><span class="dots"></span><span class="price">900 ден</span></div>
+        <div class="menu-item"><span class="name">Машко шишање<span class="desc">класично шишање</span></span><span class="dots"></span><span class="price">600 ден</span></div>
+        <div class="menu-item"><span class="name">Детско шишање<span class="desc">за деца до 12 години</span></span><span class="dots"></span><span class="price">350 ден</span></div>
+        <div class="menu-item"><span class="name">Обликување со фен<span class="desc">сушење со четка и обликување</span></span><span class="dots"></span><span class="price">700 ден</span></div>
+        <div class="menu-item"><span class="name">Нега на брада<span class="desc">обликување</span></span><span class="dots"></span><span class="price">200 ден</span></div>
+      </div>
+      <div class="menu-cat reveal in">
+        <h3>Боја и коректура</h3>
+        <div class="menu-item"><span class="name">Целосна боја<span class="desc">нанесување една боја на кратка или средна коса</span></span><span class="dots"></span><span class="price">1.800 ден</span></div>
+        <div class="menu-item"><span class="name">Ombre / Balayage<span class="desc">постепен премин помеѓу потемни и посветли тонови</span></span><span class="dots"></span><span class="price">од 1.700 ден</span></div>
+        <div class="menu-item"><span class="name">Менување на боја<span class="desc">отстранување на стара боја пред ново боење</span></span><span class="dots"></span><span class="price">1.400 ден</span></div>
+        <div class="menu-item"><span class="name">Мелирање<span class="desc">може да се направи на дел или на цела коса</span></span><span class="dots"></span><span class="price">од 2.200 ден</span></div>
+      </div>
+      <div class="menu-cat reveal in">
+        <h3>Третмани и нега</h3>
+        <div class="menu-item"><span class="name">Кератинско порамнување<span class="desc">за помазна и полесна коса до 4 месеци</span></span><span class="dots"></span><span class="price">4.400 ден</span></div>
+        <div class="menu-item"><span class="name">Длабинска хидратација<span class="desc">интензивна нега за сува и оштетена коса</span></span><span class="dots"></span><span class="price">1.200 ден</span></div>
+        <div class="menu-item"><span class="name">Третман против опаѓање<span class="desc">пакет од 4 третмани за нега на скалпот</span></span><span class="dots"></span><span class="price">2.400 ден</span></div>
+        <div class="menu-item"><span class="name">Полирање на краеви<span class="desc">ги отстранува сувите врвови без значително кратење</span></span><span class="dots"></span><span class="price">800 ден</span></div>
+      </div>
+      <div class="menu-cat reveal in">
+        <h3>Свечени и свадбени</h3>
+        <div class="menu-item"><span class="name">Свадбена фризура<span class="desc">вклучена пробна фризура пред свадбата</span></span><span class="dots"></span><span class="price">6.400 ден</span></div>
+        <div class="menu-item"><span class="name">Пакет за невеста<span class="desc">фризура, шминка и основна нега</span></span><span class="dots"></span><span class="price">9.000 ден</span></div>
+        <div class="menu-item"><span class="name">Свечена фризура<span class="desc">за свадби, прослави и други настани</span></span><span class="dots"></span><span class="price">1.700 ден</span></div>
+        <div class="menu-item"><span class="name">Плетенки и обликување<span class="desc">различни стилови</span></span><span class="dots"></span><span class="price">од 1.000 ден</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery section-pad" id="galerija">
+  <div class="wrap">
+    <div class="section-head reveal in">
+      <span class="eyebrow">Портфолио</span>
+      <h2 style="font-size:2.2rem; color:var(--cream);">Галерија на изработки</h2>
+      <p>Избор од работи на тимот — филтрирај по категорија за да видиш конкретна техника.</p>
+    </div>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn" data-filter="site">Сите</button>
+      <button class="filter-btn active" data-filter="boja">Боја</button>
+      <button class="filter-btn" data-filter="kratka">Кратка коса</button>
+      <button class="filter-btn" data-filter="pletenki">Плетенки</button>
+      <button class="filter-btn" data-filter="svadba">Свадба</button>
+    </div>
+    <div class="gal-grid" id="galGrid">
+      <div class="gal-tile t1" data-cat="boja" ><img src ="бланжс.jpeg"></div>
+      <div class="gal-tile t2 hidden-tile" data-cat="kratka"><img src ="varianty-oformleniya-strizhki-garson-na-korotkie-volosy-1.jpg"></div>
+      <div class="gal-tile t3 hidden-tile" data-cat="svadba"><img src ="svapool.jpeg"></div>
+      <div class="gal-tile t4" data-cat="boja"><img src ="bordo.jpeg"></div>
+      <div class="gal-tile t5 hidden-tile" data-cat="pletenki"><img src ="hol.jpeg"></div>
+      <div class="gal-tile t6 hidden-tile" data-cat="kratka"><img src ="bob.jpg"></div>
+      <div class="gal-tile t7 hidden-tile" data-cat="svadba"><img src ="cvece-u-kosi-svecana-frizura.jpg"></div>
+      <div class="gal-tile t8 hidden-tile" data-cat="pletenki"><img src ="коска.jpg"></div>
+    </div>
+  </div>
+</section>
+
+<section class="team section-pad" id="tim">
+  <div class="wrap">
+    <div class="section-head reveal in">
+      <span class="eyebrow">Луѓето зад ножиците</span>
+      <h2 style="font-size:2.2rem;">Тимот</h2>
+      <p>Секој член на тимот доаѓа со специјализација — заедно покриваат секој аспект на нега и стилизација на коса.</p>
+    </div>
+    <div class="team-grid">
+      <div class="member reveal in">
+        <div class="avatar c1">Л</div>
+        <h4>Лука Стефановски</h4>
+        <div class="role">Основач и главен стилист</div>
+        <p class="bio">Специјалист за прецизно шишање и структурни форми, со 11 години искуство.</p>
+        <div class="tags"><span>Шишање</span><span>Boб-форми</span></div>
+      </div>
+      <div class="member reveal in">
+        <div class="avatar c2">Б</div>
+        <h4>Бојан Илиевски</h4>
+        <div class="role">Колорист</div>
+        <p class="bio">Рачна техника на Ombre и Balayage, обучен во Милано.</p>
+        <div class="tags"><span>Боја</span><span>Ombre</span></div>
+      </div>
+      <div class="member reveal in">
+        <div class="avatar c3">В</div>
+        <h4>Ведран Гошевски</h4>
+        <div class="role">Машки стилист</div>
+        <p class="bio">Фокус на fade техники и нега на брада за машка публика.</p>
+        <div class="tags"><span>Fade</span><span>Брада</span></div>
+      </div>
+      <div class="member reveal in">
+        <div class="avatar c4">М</div>
+        <h4>Марио Димески</h4>
+        <div class="role">Свадбен стилист</div>
+        <p class="bio">Изработува свечени и свадбени фризури со фокус на трајност.</p>
+        <div class="tags"><span>Свадби</span><span>Плетенки</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testi section-pad" id="iskustva">
+  <div class="wrap">
+    <div class="testi-wrap reveal in">
+      <div class="testi-slide">
+        <p>„Прв пат добив боја што навистина изгледа природно израснато. Ќе се враќам само кај Елена.“</p>
+        <div class="who">Билјана К. — клиент од 2019</div>
+      </div>
+      <div class="testi-slide active">
+        <p>„Резервацијата онлајн беше едноставна, а фризурата за свадбата издржа цел ден без ниту една игла да падне.“</p>
+        <div class="who">Сара М. — свадбена клиентка</div>
+      </div>
+      <div class="testi-slide">
+        <p>„Конечно фризер што слуша што сакам, а не што му е нему полесно да направи.“</p>
+        <div class="who">Александар Т. — редовен клиент</div>
+      </div>
+      <div class="testi-slide">
+        <p>„Третманот со кератин ми го спаси лето — косата прв пат не се крши на краевите.“</p>
+        <div class="who">Ана В. — клиент од 2021</div>
+      </div>
+      <div class="testi-nav">
+        <button class="testi-arrow" id="testiPrev" aria-label="Претходно">‹</button>
+        <div class="testi-dots" id="testiDots"><button class="testi-dot" aria-label="Мислење 1"></button><button class="testi-dot active" aria-label="Мислење 2"></button><button class="testi-dot" aria-label="Мислење 3"></button><button class="testi-dot" aria-label="Мислење 4"></button></div>
+        <button class="testi-arrow" id="testiNext" aria-label="Следно">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking section-pad" id="rezervacija">
+  <div class="wrap">
+    <div class="booking-info reveal in">
+      <span class="eyebrow">Закажи онлајн</span>
+      <h2 style="font-size:2.2rem; color:var(--cream);">Резервација на термин</h2>
+      <p>Избери услуга, стилист и слободен термин. Потврда за резервацијата ја добиваш веднаш на екран, а телефонски повик за потврда стигнува во тек на денот.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div><h5>Избери услуга</h5><p style="color:rgba(243,236,224,.6)">Цената и времетраењето се прикажуваат автоматски.</p></div></div>
+        <div class="step"><div class="num">2</div><div><h5>Избери стилист и датум</h5><p style="color:rgba(243,236,224,.6)">Термините се ажурираат во реално време.</p></div></div>
+        <div class="step"><div class="num">3</div><div><h5>Потврди резервација</h5><p style="color:rgba(243,236,224,.6)">Внеси контакт податоци и заврши за 30 секунди.</p></div></div>
+      </div>
+    </div>
+
+    <form class="book-card reveal in" id="bookForm" novalidate="">
+      <div class="field">
+        <label for="service">Услуга</label>
+        <select id="service" required="">
+          <option value="" disabled="" selected="">Избери услуга</option>
+          <option data-price="900" data-dur="45 мин">Дамско шишање — 700 ден</option>
+          <option data-price="500" data-dur="30 мин">Машко шишање — 400 ден</option>
+          <option data-price="1800" data-dur="90 мин">Целосна боја — 1.800 ден</option>
+          <option data-price="2900" data-dur="150 мин">Ombre / Balayage — од 1.700 ден</option>
+          <option data-price="3500" data-dur="180 мин">Кератинско порамнување — 4.400 ден</option>
+          <option data-price="5000" data-dur="120 мин">Свадбена фризура — 6.400 ден</option>
+        </select>
+      </div>
+
+      <div class="price-line" id="priceLine" style="display: flex;">
+        <span id="durText">Времетраење: 30 мин</span>
+        <b id="priceText">400 ден</b>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="stylist">Стилист</label>
+          <select id="stylist" required="">
+            <option value="" disabled="" selected="">Без преференца</option>
+            <option>Лука Стефановски</option>
+            <option>Бојан Илиевски</option>
+            <option>Ведран Гошевски</option>
+            <option>Марио Димески</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="date">Датум</label>
+          <input type="date" id="date" required="" min="2026-09-15">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Слободни термини</label>
+        <div class="slots" id="slots"><button type="button" class="slot" disabled="">09:00</button><button type="button" class="slot">09:30</button><button type="button" class="slot">10:00</button><button type="button" class="slot selected">10:30</button><button type="button" class="slot">11:00</button><button type="button" class="slot" disabled="">11:30</button><button type="button" class="slot">12:30</button><button type="button" class="slot">13:00</button><button type="button" class="slot">14:00</button><button type="button" class="slot">14:30</button><button type="button" class="slot" disabled="">15:00</button><button type="button" class="slot">16:00</button><button type="button" class="slot">16:30</button><button type="button" class="slot">17:00</button><button type="button" class="slot">18:00</button></div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="fullname">Име и презиме</label>
+          <input type="text" id="fullname" placeholder="Твоето име" required="">
+        </div>
+        <div class="field">
+          <label for="phone">Телефон</label>
+          <input type="tel" id="phone" placeholder="07X XXX XXX" required="">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-wine" id="bookSubmit">Потврди резервација</button>
+      <p class="form-note">Со потврда на резервацијата, се согласуваш со нашата политика за откажување до 24 часа претходно.</p>
+
+      <div class="confirm-panel show" id="confirmPanel">
+        <h4>Резервацијата е потврдена ✓</h4>
+        <dl>
+          <dt>Услуга</dt><dd id="cfService">Машко шишање — 400 ден</dd>
+          <dt>Стилист</dt><dd id="cfStylist">Ведран Гошевски</dd>
+          <dt>Датум</dt><dd id="cfDate">30 септември 2026</dd>
+          <dt>Термин</dt><dd id="cfTime">10:30</dd>
+          <dt>Име</dt><dd id="cfName">cfhchgc · 89678564</dd>
+        </dl>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section-pad" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal in">
+      <span class="eyebrow">Прашања</span>
+      <h2 style="font-size:2.2rem;">Често поставувани прашања</h2>
+    </div>
+    <div class="faq-list reveal in">
+      <div class="faq-item">
+        <button class="faq-q"><span>Колку однапред треба да закажам термин?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>За шишање препорачуваме 2-3 дена однапред, а за боја, третмани или свадбени термини — минимум 1 недела однапред, особено во сезона на матурски свечености.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Дали правите бесплатна консултација пред боја?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Да, секоја боја или третман започнува со кратка бесплатна консултација за да се процени состојбата на косата и да се даде точна цена.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Што ако треба да го откажам терминот?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Откажувања се прифаќаат без надомест до 24 часа пред терминот. Подоцнежни откажувања се наплаќаат со 30% од цената на услугата.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Дали примате деца?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Да, шишање за деца за деца до 12 години е достапно секој работен ден, а препорачуваме доба со помал промет — пред 15 часот.</p></div>
+      </div>
+      <div class="faq-item open">
+        <button class="faq-q"><span>Кои производи ги користите?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Работиме со професионални линии без сулфати и парабени, избрани според тип на коса, а на барање советуваме и производи за домашна нега.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="kontakt">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#home" class="brand">Infinito <em>Studio</em></a>
+        <p>Модерен фризерски салон во центарот на Скопје, отворен за тебе. Занает, трпение и внимание на детали во секој термин.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Локација</h5>
+        <ul>
+          <li>ул. Македонија бр. 14</li>
+          <li>1000 Скопје</li>
+          <li>Северна Македонија</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Работно време</h5>
+        <ul>
+          <li>Пон – Пет: 09:00 – 20:00</li>
+          <li>Сабота: 09:00 – 17:00</li>
+          <li>Недела: затворено</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Останете во тек</h5>
+        <ul style="margin-bottom:18px;">
+          <li><a href="tel:+38970123456">+389 70 123 456</a></li>
+          <li><a href="mailto:info@infinitostudio.mk">info@infinitostudio.mk</a></li>
+        </ul>
+        <form class="newsletter" id="newsForm">
+          <input type="email" placeholder="Твојот е-маил" required="" id="newsEmail">
+          <button type="submit">Пријави се</button>
+        </form>
+        <div class="news-msg" id="newsMsg"></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Infinito Studio. Сите права задржани.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Известување за колачиња">
+  <p>
+    Оваа веб-страница користи колачиња за да ја запомни избраната тема
+    и основните поставки на страницата.
+  </p>
+  <div class="cookie-actions">
+    <button id="cookieReject">Одбиј</button>
+    <button class="accept" id="cookieAccept">Прифати</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    const themeToggle = document.getElementById('themeToggle');
+    const cookieBanner = document.getElementById('cookieBanner');
+    const cookieAccept = document.getElementById('cookieAccept');
+    const cookieReject = document.getElementById('cookieReject');
+
+    function setCookie(name, value, days){
+      const expires = new Date(Date.now() + days * 86400000).toUTCString();
+      document.cookie = name + '=' + encodeURIComponent(value) +
+              '; expires=' + expires + '; path=/; SameSite=Lax';
+    }
+
+    function getCookie(name){
+      const cookies = document.cookie.split('; ');
+      for(const cookie of cookies){
+        const parts = cookie.split('=');
+        if(parts[0] === name){
+          return decodeURIComponent(parts.slice(1).join('='));
+        }
+      }
+      return null;
+    }
+
+    function applyTheme(theme){
+      if(theme === 'dark'){
+        document.body.classList.add('dark-theme');
+        themeToggle.textContent = '☀';
+        themeToggle.title = 'Светла тема';
+      } else {
+        document.body.classList.remove('dark-theme');
+        themeToggle.textContent = '☾';
+        themeToggle.title = 'Темна тема';
+      }
+    }
+
+    const savedTheme = getCookie('infinito_theme');
+    if(savedTheme){
+      applyTheme(savedTheme);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
+      applyTheme(newTheme);
+
+      if(getCookie('infinito_cookie_consent') === 'accepted'){
+        setCookie('infinito_theme', newTheme, 365);
+      }
+    });
+
+    if(getCookie('infinito_cookie_consent')){
+      cookieBanner.style.display = 'none';
+    }
+
+    cookieAccept.addEventListener('click', () => {
+      setCookie('infinito_cookie_consent', 'accepted', 365);
+
+      const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+      setCookie('infinito_theme', currentTheme, 365);
+
+      cookieBanner.style.display = 'none';
+    });
+
+    cookieReject.addEventListener('click', () => {
+      setCookie('infinito_cookie_consent', 'rejected', 365);
+      cookieBanner.style.display = 'none';
+    });
+
+
+    /* ---------- NAV: scroll state, mobile toggle, active link ---------- */
+    const nav = document.getElementById('nav');
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 30);
+    };
+    document.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    burger.addEventListener('click', () => nav.classList.toggle('nav-open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('nav-open')));
+
+    const sections = [...document.querySelectorAll('section[id], header[id]')];
+    const navAnchors = [...document.querySelectorAll('[data-nav]')];
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const id = entry.target.id;
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    sections.forEach(s => navObserver.observe(s));
+
+    /* ---------- REVEAL ON SCROLL ---------- */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ---------- STAT COUNTERS ---------- */
+    const counters = document.querySelectorAll('[data-count]');
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1400;
+        const start = performance.now();
+        function tick(now){
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target).toLocaleString('mk-MK');
+          if(p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        countObserver.unobserve(el);
+      });
+    }, {threshold:0.5});
+    counters.forEach(c => countObserver.observe(c));
+
+    /* ---------- GALLERY FILTER ---------- */
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galTiles = document.querySelectorAll('.gal-tile');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        galTiles.forEach(tile => {
+          const show = f === 'site' || tile.dataset.cat === f;
+          tile.classList.toggle('hidden-tile', !show);
+        });
+      });
+    });
+
+    /* ---------- TESTIMONIALS SLIDER ---------- */
+    const slides = document.querySelectorAll('.testi-slide');
+    const dotsWrap = document.getElementById('testiDots');
+    let testiIndex = 0;
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'testi-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Мислење ' + (i+1));
+      d.addEventListener('click', () => showTesti(i));
+      dotsWrap.appendChild(d);
+    });
+    const dots = dotsWrap.querySelectorAll('.testi-dot');
+
+    function showTesti(i){
+      slides[testiIndex].classList.remove('active');
+      dots[testiIndex].classList.remove('active');
+      testiIndex = (i + slides.length) % slides.length;
+      slides[testiIndex].classList.add('active');
+      dots[testiIndex].classList.add('active');
+    }
+    document.getElementById('testiPrev').addEventListener('click', () => showTesti(testiIndex - 1));
+    document.getElementById('testiNext').addEventListener('click', () => showTesti(testiIndex + 1));
+    let testiTimer = setInterval(() => showTesti(testiIndex + 1), 6500);
+    dotsWrap.parentElement.addEventListener('mouseenter', () => clearInterval(testiTimer));
+
+    /* ---------- FAQ ACCORDION ---------- */
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if(!isOpen) item.classList.add('open');
+      });
+    });
+
+    /* ---------- BOOKING FORM ---------- */
+    const serviceSel = document.getElementById('service');
+    const priceLine = document.getElementById('priceLine');
+    const durText = document.getElementById('durText');
+    const priceText = document.getElementById('priceText');
+    const dateInput = document.getElementById('date');
+    const slotsWrap = document.getElementById('slots');
+    const bookForm = document.getElementById('bookForm');
+    const confirmPanel = document.getElementById('confirmPanel');
+
+    const todayISO = new Date().toISOString().split('T')[0];
+    dateInput.min = todayISO;
+
+    serviceSel.addEventListener('change', () => {
+      const opt = serviceSel.selectedOptions[0];
+      if(opt && opt.dataset.price){
+        priceLine.style.display = 'flex';
+        durText.textContent = 'Времетраење: ' + opt.dataset.dur;
+        priceText.textContent = Number(opt.dataset.price).toLocaleString('mk-MK') + ' ден';
+      }
+    });
+
+    let selectedSlot = null;
+    function buildSlots(){
+      slotsWrap.innerHTML = '';
+      selectedSlot = null;
+      const hours = ['09:00','09:30','10:00','10:30','11:00','11:30','12:30','13:00','14:00','14:30','15:00','16:00','16:30','17:00','18:00'];
+      // deterministic "taken" slots based on date so it feels alive without being random each render
+      const seed = dateInput.value ? dateInput.value.split('-').reduce((a,b)=>a+parseInt(b,10),0) : 0;
+      hours.forEach((h, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slot';
+        btn.textContent = h;
+        const taken = (seed + i) % 5 === 0;
+        if(taken){
+          btn.disabled = true;
+        } else {
+          btn.addEventListener('click', () => {
+            slotsWrap.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedSlot = h;
+          });
+        }
+        slotsWrap.appendChild(btn);
+      });
+    }
+    dateInput.addEventListener('change', buildSlots);
+    buildSlots();
+
+    bookForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const service = serviceSel.selectedOptions[0];
+      const name = document.getElementById('fullname').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const stylist = document.getElementById('stylist').value || 'Без преференца';
+      const date = dateInput.value;
+
+      if(!service || !service.value && service.selectedIndex === 0){
+        alert('Ве молиме изберете услуга.');
+        return;
+      }
+      if(!date){ alert('Ве молиме изберете датум.'); return; }
+      if(!selectedSlot){ alert('Ве молиме изберете слободен термин.'); return; }
+      if(!name || !phone){ alert('Ве молиме пополнете ги контакт податоците.'); return; }
+
+      document.getElementById('cfService').textContent = service.textContent;
+      document.getElementById('cfStylist').textContent = stylist;
+      document.getElementById('cfDate').textContent = new Date(date).toLocaleDateString('mk-MK', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+      document.getElementById('cfTime').textContent = selectedSlot;
+      document.getElementById('cfName').textContent = name + ' · ' + phone;
+
+      confirmPanel.classList.add('show');
+      confirmPanel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+
+    const newsForm = document.getElementById('newsForm');
+    const newsMsg = document.getElementById('newsMsg');
+    newsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      newsMsg.textContent = 'Ви благодариме — успешно сте пријавени.';
+      newsForm.reset();
+    });
+
+  })();
+</script>
+
+
+</body></html>
